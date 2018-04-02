@@ -1,0 +1,35 @@
+
+<div *ngIf="action">
+    <h2><span>Action</span> {{action.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Status</span></dt>
+        <dd>
+            <span>{{action.status}}</span>
+        </dd>
+        <dt><span>Duration</span></dt>
+        <dd>
+            <span>{{action.duration}}</span>
+        </dd>
+        <dt><span>Task</span></dt>
+        <dd>
+            <div *ngIf="action.taskId">
+                <a [routerLink]="['/task', action.taskId]">{{action.taskId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'action/'+ action.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,30 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "task",
+            "otherEntityName": "task",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "New,Progress,Completed,Interrupted",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "duration",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180401225605",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "action",
+    "pagination": "infinite-scroll"
+}

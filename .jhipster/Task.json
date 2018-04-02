@@ -1,0 +1,52 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "username",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "task"
+        },
+        {
+            "relationshipName": "actions",
+            "otherEntityName": "action",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "task"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "New,Progress,Completed,Cancel",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "statusDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "estimate",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20180401213829",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "task",
+    "pagination": "infinite-scroll"
+}

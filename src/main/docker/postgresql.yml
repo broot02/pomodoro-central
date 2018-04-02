@@ -1,0 +1,11 @@
+version: '2'
+services:
+    pomodoro-postgresql:
+        image: postgres:9.6.5
+        # volumes:
+        #     - ~/volumes/jhipster/pomodoro/postgresql/:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=pomodoro
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
