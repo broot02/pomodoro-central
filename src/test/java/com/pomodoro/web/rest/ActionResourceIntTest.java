@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.pomodoro.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -75,10 +76,11 @@ public class ActionResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ActionResource actionResource = new ActionResource(actionService);
+        final ActionResource actionResource = new ActionResource(actionService);
         this.restActionMockMvc = MockMvcBuilders.standaloneSetup(actionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
@@ -135,7 +137,7 @@ public class ActionResourceIntTest {
             .content(TestUtil.convertObjectToJsonBytes(actionDTO)))
             .andExpect(status().isBadRequest());
 
-        // Validate the Alice in the database
+        // Validate the Action in the database
         List<Action> actionList = actionRepository.findAll();
         assertThat(actionList).hasSize(databaseSizeBeforeCreate);
     }
@@ -206,6 +208,8 @@ public class ActionResourceIntTest {
 
         // Update the action
         Action updatedAction = actionRepository.findOne(action.getId());
+        // Disconnect from session so that the updates on updatedAction are not directly saved in db
+        em.detach(updatedAction);
         updatedAction
             .status(UPDATED_STATUS)
             .duration(UPDATED_DURATION);

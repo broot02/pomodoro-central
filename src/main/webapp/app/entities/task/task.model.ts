@@ -1,6 +1,6 @@
 import { BaseEntity } from './../../shared';
 
-const enum Status {
+export const enum Status {
     'New',
     'Progress',
     'Completed',
@@ -14,6 +14,7 @@ export class Task implements BaseEntity {
         public status?: Status,
         public statusDate?: any,
         public estimate?: number,
+        public usernameLogin?: string,
         public usernameId?: number,
         public actions?: BaseEntity[],
     ) {

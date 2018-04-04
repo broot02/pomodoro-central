@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager  } from 'ng-jhipster';
+import { HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs/Subscription';
+import { JhiEventManager } from 'ng-jhipster';
 
 import { Task } from './task.model';
 import { TaskService } from './task.service';
@@ -31,9 +32,10 @@ export class TaskDetailComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
-        this.taskService.find(id).subscribe((task) => {
-            this.task = task;
-        });
+        this.taskService.find(id)
+            .subscribe((taskResponse: HttpResponse<Task>) => {
+                this.task = taskResponse.body;
+            });
     }
     previousState() {
         window.history.back();

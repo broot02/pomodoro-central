@@ -44,10 +44,10 @@ public class TaskService {
     }
 
     /**
-     *  Get all the tasks.
+     * Get all the tasks.
      *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public Page<TaskDTO> findAll(Pageable pageable) {
@@ -57,10 +57,10 @@ public class TaskService {
     }
 
     /**
-     *  Get one task by id.
+     * Get one task by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public TaskDTO findOne(Long id) {
@@ -70,9 +70,9 @@ public class TaskService {
     }
 
     /**
-     *  Delete the  task by id.
+     * Delete the task by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete Task : {}", id);

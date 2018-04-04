@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
+import static com.pomodoro.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -83,10 +84,11 @@ public class TaskResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        TaskResource taskResource = new TaskResource(taskService);
+        final TaskResource taskResource = new TaskResource(taskService);
         this.restTaskMockMvc = MockMvcBuilders.standaloneSetup(taskResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
@@ -147,7 +149,7 @@ public class TaskResourceIntTest {
             .content(TestUtil.convertObjectToJsonBytes(taskDTO)))
             .andExpect(status().isBadRequest());
 
-        // Validate the Alice in the database
+        // Validate the Task in the database
         List<Task> taskList = taskRepository.findAll();
         assertThat(taskList).hasSize(databaseSizeBeforeCreate);
     }
@@ -260,6 +262,8 @@ public class TaskResourceIntTest {
 
         // Update the task
         Task updatedTask = taskRepository.findOne(task.getId());
+        // Disconnect from session so that the updates on updatedTask are not directly saved in db
+        em.detach(updatedTask);
         updatedTask
             .name(UPDATED_NAME)
             .status(UPDATED_STATUS)

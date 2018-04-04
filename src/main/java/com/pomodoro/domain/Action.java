@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -36,6 +37,7 @@ public class Action implements Serializable {
     @ManyToOne
     private Task task;
 
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -82,6 +84,7 @@ public class Action implements Serializable {
     public void setTask(Task task) {
         this.task = task;
     }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -108,7 +111,7 @@ public class Action implements Serializable {
         return "Action{" +
             "id=" + getId() +
             ", status='" + getStatus() + "'" +
-            ", duration='" + getDuration() + "'" +
+            ", duration=" + getDuration() +
             "}";
     }
 }

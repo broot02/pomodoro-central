@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager  } from 'ng-jhipster';
+import { HttpResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs/Subscription';
+import { JhiEventManager } from 'ng-jhipster';
 
 import { Action } from './action.model';
 import { ActionService } from './action.service';
@@ -31,9 +32,10 @@ export class ActionDetailComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
-        this.actionService.find(id).subscribe((action) => {
-            this.action = action;
-        });
+        this.actionService.find(id)
+            .subscribe((actionResponse: HttpResponse<Action>) => {
+                this.action = actionResponse.body;
+            });
     }
     previousState() {
         window.history.back();
