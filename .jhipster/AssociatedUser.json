@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "associatedUser"
+        },
+        {
+            "relationshipName": "associatedUser",
+            "otherEntityName": "user",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "associatedUser"
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20180403100659",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "associated_user",
+    "pagination": "infinite-scroll"
+}

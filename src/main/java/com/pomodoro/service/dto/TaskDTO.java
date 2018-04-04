@@ -115,7 +115,7 @@ public class TaskDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             ", statusDate='" + getStatusDate() + "'" +
-            ", estimate='" + getEstimate() + "'" +
+            ", estimate=" + getEstimate() +
             "}";
     }
 }

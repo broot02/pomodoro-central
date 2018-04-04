@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -53,6 +54,7 @@ public class Task implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Action> actions = new HashSet<>();
 
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -150,6 +152,7 @@ public class Task implements Serializable {
     public void setActions(Set<Action> actions) {
         this.actions = actions;
     }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -178,7 +181,7 @@ public class Task implements Serializable {
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             ", statusDate='" + getStatusDate() + "'" +
-            ", estimate='" + getEstimate() + "'" +
+            ", estimate=" + getEstimate() +
             "}";
     }
 }

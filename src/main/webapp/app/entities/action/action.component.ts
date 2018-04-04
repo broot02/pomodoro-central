@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiAlertService } from 'ng-jhipster';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs/Subscription';
+import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 import { Action } from './action.model';
 import { ActionService } from './action.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import { ITEMS_PER_PAGE, Principal } from '../../shared';
 
 @Component({
     selector: 'jhi-action',
@@ -27,7 +26,7 @@ export class ActionComponent implements OnInit, OnDestroy {
 
     constructor(
         private actionService: ActionService,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
         private principal: Principal
@@ -48,8 +47,8 @@ export class ActionComponent implements OnInit, OnDestroy {
             size: this.itemsPerPage,
             sort: this.sort()
         }).subscribe(
-            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpResponse<Action[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
 
@@ -99,6 +98,6 @@ export class ActionComponent implements OnInit, OnDestroy {
     }
 
     private onError(error) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 }

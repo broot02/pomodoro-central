@@ -30,11 +30,11 @@
         <div class="form-group">
             <label class="form-control-label" for="field_duration">Duration</label>
             <input type="number" class="form-control" name="duration" id="field_duration"
-                [(ngModel)]="action.duration"  />
+                [(ngModel)]="action.duration" />
         </div>
 
         <div class="form-group">
-            <label for="field_task">Task</label>
+            <label class="form-control-label" for="field_task">Task</label>
             <select class="form-control" id="field_task" name="task" [(ngModel)]="action.taskId" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="taskOption.id" *ngFor="let taskOption of tasks; trackBy: trackTaskById">{{taskOption.id}}</option>
@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
             <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
         </button>
         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">

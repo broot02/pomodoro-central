@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiAlertService } from 'ng-jhipster';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs/Subscription';
+import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 import { Task } from './task.model';
 import { TaskService } from './task.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import { ITEMS_PER_PAGE, Principal } from '../../shared';
 
 @Component({
     selector: 'jhi-task',
@@ -27,7 +26,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
     constructor(
         private taskService: TaskService,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
         private principal: Principal
@@ -48,8 +47,8 @@ export class TaskComponent implements OnInit, OnDestroy {
             size: this.itemsPerPage,
             sort: this.sort()
         }).subscribe(
-            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
+            (res: HttpResponse<Task[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
 
@@ -99,6 +98,6 @@ export class TaskComponent implements OnInit, OnDestroy {
     }
 
     private onError(error) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 }

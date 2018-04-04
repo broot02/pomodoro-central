@@ -2,10 +2,10 @@ package com.pomodoro.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.pomodoro.service.ActionService;
+import com.pomodoro.web.rest.errors.BadRequestAlertException;
 import com.pomodoro.web.rest.util.HeaderUtil;
 import com.pomodoro.web.rest.util.PaginationUtil;
 import com.pomodoro.service.dto.ActionDTO;
-import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +52,7 @@ public class ActionResource {
     public ResponseEntity<ActionDTO> createAction(@Valid @RequestBody ActionDTO actionDTO) throws URISyntaxException {
         log.debug("REST request to save Action : {}", actionDTO);
         if (actionDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new action cannot already have an ID")).body(null);
+            throw new BadRequestAlertException("A new action cannot already have an ID", ENTITY_NAME, "idexists");
         }
         ActionDTO result = actionService.save(actionDTO);
         return ResponseEntity.created(new URI("/api/actions/" + result.getId()))
@@ -90,7 +90,7 @@ public class ActionResource {
      */
     @GetMapping("/actions")
     @Timed
-    public ResponseEntity<List<ActionDTO>> getAllActions(@ApiParam Pageable pageable) {
+    public ResponseEntity<List<ActionDTO>> getAllActions(Pageable pageable) {
         log.debug("REST request to get a page of Actions");
         Page<ActionDTO> page = actionService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/actions");
