@@ -1,0 +1,32 @@
+
+<div *ngIf="dailyTaskList">
+    <h2><span>Daily Task List</span> {{dailyTaskList.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Task Date</span></dt>
+        <dd>
+            <span>{{dailyTaskList.taskDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span>Tasks</span></dt>
+        <dd>
+            <span *ngFor="let tasks of dailyTaskList.tasks; let last = last">
+                <a [routerLink]="['/task', tasks?.id ]">{{tasks.id}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'daily-task-list/'+ dailyTaskList.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>
