@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity DailyTaskList.
+    -->
+    <changeSet id="20180405024618-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="daily_task_lists_id"
+                                 baseTableName="daily_task_list_tasks"
+                                 constraintName="fk_daily_task_list_tasks_daily_task_lists_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="daily_task_list"/>
+        <addForeignKeyConstraint baseColumnNames="tasks_id"
+                                 baseTableName="daily_task_list_tasks"
+                                 constraintName="fk_daily_task_list_tasks_tasks_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="task"/>
+        
+    </changeSet>
+</databaseChangeLog>

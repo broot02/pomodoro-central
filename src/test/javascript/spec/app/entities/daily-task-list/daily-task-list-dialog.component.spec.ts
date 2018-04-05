@@ -6,39 +6,37 @@ import { Observable } from 'rxjs/Observable';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { PomodoroTestModule } from '../../../test.module';
-import { TaskDialogComponent } from '../../../../../../main/webapp/app/entities/task/task-dialog.component';
-import { TaskService } from '../../../../../../main/webapp/app/entities/task/task.service';
-import { Task } from '../../../../../../main/webapp/app/entities/task/task.model';
-import { UserService } from '../../../../../../main/webapp/app/shared';
-import { DailyTaskListService } from '../../../../../../main/webapp/app/entities/daily-task-list';
+import { DailyTaskListDialogComponent } from '../../../../../../main/webapp/app/entities/daily-task-list/daily-task-list-dialog.component';
+import { DailyTaskListService } from '../../../../../../main/webapp/app/entities/daily-task-list/daily-task-list.service';
+import { DailyTaskList } from '../../../../../../main/webapp/app/entities/daily-task-list/daily-task-list.model';
+import { TaskService } from '../../../../../../main/webapp/app/entities/task';
 
 describe('Component Tests', () => {
 
-    describe('Task Management Dialog Component', () => {
-        let comp: TaskDialogComponent;
-        let fixture: ComponentFixture<TaskDialogComponent>;
-        let service: TaskService;
+    describe('DailyTaskList Management Dialog Component', () => {
+        let comp: DailyTaskListDialogComponent;
+        let fixture: ComponentFixture<DailyTaskListDialogComponent>;
+        let service: DailyTaskListService;
         let mockEventManager: any;
         let mockActiveModal: any;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [PomodoroTestModule],
-                declarations: [TaskDialogComponent],
+                declarations: [DailyTaskListDialogComponent],
                 providers: [
-                    UserService,
-                    DailyTaskListService,
-                    TaskService
+                    TaskService,
+                    DailyTaskListService
                 ]
             })
-            .overrideTemplate(TaskDialogComponent, '')
+            .overrideTemplate(DailyTaskListDialogComponent, '')
             .compileComponents();
         }));
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(TaskDialogComponent);
+            fixture = TestBed.createComponent(DailyTaskListDialogComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(TaskService);
+            service = fixture.debugElement.injector.get(DailyTaskListService);
             mockEventManager = fixture.debugElement.injector.get(JhiEventManager);
             mockActiveModal = fixture.debugElement.injector.get(NgbActiveModal);
         });
@@ -48,9 +46,9 @@ describe('Component Tests', () => {
                 inject([],
                     fakeAsync(() => {
                         // GIVEN
-                        const entity = new Task(123);
+                        const entity = new DailyTaskList(123);
                         spyOn(service, 'update').and.returnValue(Observable.of(new HttpResponse({body: entity})));
-                        comp.task = entity;
+                        comp.dailyTaskList = entity;
                         // WHEN
                         comp.save();
                         tick(); // simulate async
@@ -58,7 +56,7 @@ describe('Component Tests', () => {
                         // THEN
                         expect(service.update).toHaveBeenCalledWith(entity);
                         expect(comp.isSaving).toEqual(false);
-                        expect(mockEventManager.broadcastSpy).toHaveBeenCalledWith({ name: 'taskListModification', content: 'OK'});
+                        expect(mockEventManager.broadcastSpy).toHaveBeenCalledWith({ name: 'dailyTaskListListModification', content: 'OK'});
                         expect(mockActiveModal.dismissSpy).toHaveBeenCalled();
                     })
                 )
@@ -68,9 +66,9 @@ describe('Component Tests', () => {
                 inject([],
                     fakeAsync(() => {
                         // GIVEN
-                        const entity = new Task();
+                        const entity = new DailyTaskList();
                         spyOn(service, 'create').and.returnValue(Observable.of(new HttpResponse({body: entity})));
-                        comp.task = entity;
+                        comp.dailyTaskList = entity;
                         // WHEN
                         comp.save();
                         tick(); // simulate async
@@ -78,7 +76,7 @@ describe('Component Tests', () => {
                         // THEN
                         expect(service.create).toHaveBeenCalledWith(entity);
                         expect(comp.isSaving).toEqual(false);
-                        expect(mockEventManager.broadcastSpy).toHaveBeenCalledWith({ name: 'taskListModification', content: 'OK'});
+                        expect(mockEventManager.broadcastSpy).toHaveBeenCalledWith({ name: 'dailyTaskListListModification', content: 'OK'});
                         expect(mockActiveModal.dismissSpy).toHaveBeenCalled();
                     })
                 )

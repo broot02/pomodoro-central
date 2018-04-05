@@ -6,42 +6,36 @@ import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { Task } from './task.model';
-import { TaskPopupService } from './task-popup.service';
-import { TaskService } from './task.service';
-import { User, UserService } from '../../shared';
-import { DailyTaskList, DailyTaskListService } from '../daily-task-list';
+import { DailyTaskList } from './daily-task-list.model';
+import { DailyTaskListPopupService } from './daily-task-list-popup.service';
+import { DailyTaskListService } from './daily-task-list.service';
+import { Task, TaskService } from '../task';
 
 @Component({
-    selector: 'jhi-task-dialog',
-    templateUrl: './task-dialog.component.html'
+    selector: 'jhi-daily-task-list-dialog',
+    templateUrl: './daily-task-list-dialog.component.html'
 })
-export class TaskDialogComponent implements OnInit {
+export class DailyTaskListDialogComponent implements OnInit {
 
-    task: Task;
+    dailyTaskList: DailyTaskList;
     isSaving: boolean;
 
-    users: User[];
-
-    dailytasklists: DailyTaskList[];
-    statusDateDp: any;
+    tasks: Task[];
+    taskDateDp: any;
 
     constructor(
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
-        private taskService: TaskService,
-        private userService: UserService,
         private dailyTaskListService: DailyTaskListService,
+        private taskService: TaskService,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
-        this.userService.query()
-            .subscribe((res: HttpResponse<User[]>) => { this.users = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-        this.dailyTaskListService.query()
-            .subscribe((res: HttpResponse<DailyTaskList[]>) => { this.dailytasklists = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+        this.taskService.query()
+            .subscribe((res: HttpResponse<Task[]>) => { this.tasks = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -50,22 +44,22 @@ export class TaskDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.task.id !== undefined) {
+        if (this.dailyTaskList.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.taskService.update(this.task));
+                this.dailyTaskListService.update(this.dailyTaskList));
         } else {
             this.subscribeToSaveResponse(
-                this.taskService.create(this.task));
+                this.dailyTaskListService.create(this.dailyTaskList));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<Task>>) {
-        result.subscribe((res: HttpResponse<Task>) =>
+    private subscribeToSaveResponse(result: Observable<HttpResponse<DailyTaskList>>) {
+        result.subscribe((res: HttpResponse<DailyTaskList>) =>
             this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
     }
 
-    private onSaveSuccess(result: Task) {
-        this.eventManager.broadcast({ name: 'taskListModification', content: 'OK'});
+    private onSaveSuccess(result: DailyTaskList) {
+        this.eventManager.broadcast({ name: 'dailyTaskListListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -78,11 +72,7 @@ export class TaskDialogComponent implements OnInit {
         this.jhiAlertService.error(error.message, null, null);
     }
 
-    trackUserById(index: number, item: User) {
-        return item.id;
-    }
-
-    trackDailyTaskListById(index: number, item: DailyTaskList) {
+    trackTaskById(index: number, item: Task) {
         return item.id;
     }
 
@@ -99,26 +89,26 @@ export class TaskDialogComponent implements OnInit {
 }
 
 @Component({
-    selector: 'jhi-task-popup',
+    selector: 'jhi-daily-task-list-popup',
     template: ''
 })
-export class TaskPopupComponent implements OnInit, OnDestroy {
+export class DailyTaskListPopupComponent implements OnInit, OnDestroy {
 
     routeSub: any;
 
     constructor(
         private route: ActivatedRoute,
-        private taskPopupService: TaskPopupService
+        private dailyTaskListPopupService: DailyTaskListPopupService
     ) {}
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
             if ( params['id'] ) {
-                this.taskPopupService
-                    .open(TaskDialogComponent as Component, params['id']);
+                this.dailyTaskListPopupService
+                    .open(DailyTaskListDialogComponent as Component, params['id']);
             } else {
-                this.taskPopupService
-                    .open(TaskDialogComponent as Component);
+                this.dailyTaskListPopupService
+                    .open(DailyTaskListDialogComponent as Component);
             }
         });
     }

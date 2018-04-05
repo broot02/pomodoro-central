@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "tasks",
+            "otherEntityName": "task",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "name",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "dailyTaskList"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "taskDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20180405024618",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "daily_task_list",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
+}

@@ -14,6 +14,13 @@
             "otherEntityName": "action",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "task"
+        },
+        {
+            "relationshipName": "dailyTaskList",
+            "otherEntityName": "dailyTaskList",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "task"
         }
     ],
     "fields": [
@@ -48,5 +55,6 @@
     "dto": "mapstruct",
     "service": "serviceClass",
     "entityTableName": "task",
+    "jpaMetamodelFiltering": false,
     "pagination": "infinite-scroll"
 }
