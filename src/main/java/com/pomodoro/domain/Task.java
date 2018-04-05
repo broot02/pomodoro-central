@@ -54,6 +54,11 @@ public class Task implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Action> actions = new HashSet<>();
 
+    @ManyToMany(mappedBy = "tasks")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<DailyTaskList> dailyTaskLists = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -151,6 +156,31 @@ public class Task implements Serializable {
 
     public void setActions(Set<Action> actions) {
         this.actions = actions;
+    }
+
+    public Set<DailyTaskList> getDailyTaskLists() {
+        return dailyTaskLists;
+    }
+
+    public Task dailyTaskLists(Set<DailyTaskList> dailyTaskLists) {
+        this.dailyTaskLists = dailyTaskLists;
+        return this;
+    }
+
+    public Task addDailyTaskList(DailyTaskList dailyTaskList) {
+        this.dailyTaskLists.add(dailyTaskList);
+        dailyTaskList.getTasks().add(this);
+        return this;
+    }
+
+    public Task removeDailyTaskList(DailyTaskList dailyTaskList) {
+        this.dailyTaskLists.remove(dailyTaskList);
+        dailyTaskList.getTasks().remove(this);
+        return this;
+    }
+
+    public void setDailyTaskLists(Set<DailyTaskList> dailyTaskLists) {
+        this.dailyTaskLists = dailyTaskLists;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

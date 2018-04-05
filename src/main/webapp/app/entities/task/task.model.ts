@@ -17,6 +17,7 @@ export class Task implements BaseEntity {
         public usernameLogin?: string,
         public usernameId?: number,
         public actions?: BaseEntity[],
+        public dailyTaskLists?: BaseEntity[],
     ) {
     }
 }

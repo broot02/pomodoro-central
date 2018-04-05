@@ -17,6 +17,7 @@ public interface TaskMapper extends EntityMapper<TaskDTO, Task> {
 
     @Mapping(source = "usernameId", target = "username")
     @Mapping(target = "actions", ignore = true)
+    @Mapping(target = "dailyTaskLists", ignore = true)
     Task toEntity(TaskDTO taskDTO);
 
     default Task fromId(Long id) {

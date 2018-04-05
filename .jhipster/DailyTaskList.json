@@ -5,9 +5,9 @@
             "relationshipName": "tasks",
             "otherEntityName": "task",
             "relationshipType": "many-to-many",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
-            "otherEntityRelationshipName": "dailyList"
+            "otherEntityRelationshipName": "dailyTaskList"
         }
     ],
     "fields": [

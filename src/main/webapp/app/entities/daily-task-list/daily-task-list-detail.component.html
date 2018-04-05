@@ -11,7 +11,7 @@
         <dt><span>Tasks</span></dt>
         <dd>
             <span *ngFor="let tasks of dailyTaskList.tasks; let last = last">
-                <a [routerLink]="['/task', tasks?.id ]">{{tasks.id}}</a>{{last ? '' : ', '}}
+                <a [routerLink]="['/task', tasks?.id ]">{{tasks.name}}</a>{{last ? '' : ', '}}
             </span>
         </dd>
     </dl>

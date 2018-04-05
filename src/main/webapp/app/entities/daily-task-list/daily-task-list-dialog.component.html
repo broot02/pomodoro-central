@@ -32,7 +32,7 @@
         <div class="form-group">
             <label for="field_tasks">Tasks</label>
             <select class="form-control" id="field_tasks" multiple name="tasks" [(ngModel)]="dailyTaskList.tasks">
-                <option [ngValue]="getSelected(dailyTaskList.tasks, taskOption)" *ngFor="let taskOption of tasks; trackBy: trackTaskById">{{taskOption.id}}</option>
+                <option [ngValue]="getSelected(dailyTaskList.tasks, taskOption)" *ngFor="let taskOption of tasks; trackBy: trackTaskById">{{taskOption.name}}</option>
             </select>
         </div>
     </div>

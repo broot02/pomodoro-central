@@ -10,6 +10,7 @@ import { Task } from './task.model';
 import { TaskPopupService } from './task-popup.service';
 import { TaskService } from './task.service';
 import { User, UserService } from '../../shared';
+import { DailyTaskList, DailyTaskListService } from '../daily-task-list';
 
 @Component({
     selector: 'jhi-task-dialog',
@@ -21,6 +22,8 @@ export class TaskDialogComponent implements OnInit {
     isSaving: boolean;
 
     users: User[];
+
+    dailytasklists: DailyTaskList[];
     statusDateDp: any;
 
     constructor(
@@ -28,6 +31,7 @@ export class TaskDialogComponent implements OnInit {
         private jhiAlertService: JhiAlertService,
         private taskService: TaskService,
         private userService: UserService,
+        private dailyTaskListService: DailyTaskListService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -36,6 +40,8 @@ export class TaskDialogComponent implements OnInit {
         this.isSaving = false;
         this.userService.query()
             .subscribe((res: HttpResponse<User[]>) => { this.users = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+        this.dailyTaskListService.query()
+            .subscribe((res: HttpResponse<DailyTaskList[]>) => { this.dailytasklists = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -74,6 +80,21 @@ export class TaskDialogComponent implements OnInit {
 
     trackUserById(index: number, item: User) {
         return item.id;
+    }
+
+    trackDailyTaskListById(index: number, item: DailyTaskList) {
+        return item.id;
+    }
+
+    getSelected(selectedVals: Array<any>, option: any) {
+        if (selectedVals) {
+            for (let i = 0; i < selectedVals.length; i++) {
+                if (option.id === selectedVals[i].id) {
+                    return selectedVals[i];
+                }
+            }
+        }
+        return option;
     }
 }
 

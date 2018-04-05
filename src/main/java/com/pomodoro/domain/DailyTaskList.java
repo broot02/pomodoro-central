@@ -71,13 +71,13 @@ public class DailyTaskList implements Serializable {
 
     public DailyTaskList addTasks(Task task) {
         this.tasks.add(task);
-        task.getDailyLists().add(this);
+        task.getDailyTaskLists().add(this);
         return this;
     }
 
     public DailyTaskList removeTasks(Task task) {
         this.tasks.remove(task);
-        task.getDailyLists().remove(this);
+        task.getDailyTaskLists().remove(this);
         return this;
     }
 
