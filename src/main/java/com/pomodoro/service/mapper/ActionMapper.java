@@ -8,14 +8,15 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Action and its DTO ActionDTO.
  */
-@Mapper(componentModel = "spring", uses = {TaskMapper.class, })
-public interface ActionMapper extends EntityMapper <ActionDTO, Action> {
+@Mapper(componentModel = "spring", uses = {TaskMapper.class})
+public interface ActionMapper extends EntityMapper<ActionDTO, Action> {
 
     @Mapping(source = "task.id", target = "taskId")
-    ActionDTO toDto(Action action); 
+    ActionDTO toDto(Action action);
 
     @Mapping(source = "taskId", target = "task")
-    Action toEntity(ActionDTO actionDTO); 
+    Action toEntity(ActionDTO actionDTO);
+
     default Action fromId(Long id) {
         if (id == null) {
             return null;

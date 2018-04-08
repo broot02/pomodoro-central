@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Response } from '@angular/http';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Rx';
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs/Observable';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Action } from './action.model';
 import { ActionPopupService } from './action-popup.service';
 import { ActionService } from './action.service';
 import { Task, TaskService } from '../task';
-import { ResponseWrapper } from '../../shared';
 
 @Component({
     selector: 'jhi-action-dialog',
@@ -25,7 +24,7 @@ export class ActionDialogComponent implements OnInit {
 
     constructor(
         public activeModal: NgbActiveModal,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private actionService: ActionService,
         private taskService: TaskService,
         private eventManager: JhiEventManager
@@ -35,7 +34,7 @@ export class ActionDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.taskService.query()
-            .subscribe((res: ResponseWrapper) => { this.tasks = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+            .subscribe((res: HttpResponse<Task[]>) => { this.tasks = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -53,9 +52,9 @@ export class ActionDialogComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Action>) {
-        result.subscribe((res: Action) =>
-            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Action>>) {
+        result.subscribe((res: HttpResponse<Action>) =>
+            this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess(result: Action) {
@@ -64,18 +63,12 @@ export class ActionDialogComponent implements OnInit {
         this.activeModal.dismiss(result);
     }
 
-    private onSaveError(error) {
-        try {
-            error.json();
-        } catch (exception) {
-            error.message = error.text();
-        }
+    private onSaveError() {
         this.isSaving = false;
-        this.onError(error);
     }
 
-    private onError(error) {
-        this.alertService.error(error.message, null, null);
+    private onError(error: any) {
+        this.jhiAlertService.error(error.message, null, null);
     }
 
     trackTaskById(index: number, item: Task) {

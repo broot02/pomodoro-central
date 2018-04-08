@@ -11,9 +11,9 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface TaskRepository extends JpaRepository<Task,Long> {
+public interface TaskRepository extends JpaRepository<Task, Long> {
 
     @Query("select task from Task task where task.username.login = ?#{principal.username}")
     List<Task> findByUsernameIsCurrentUser();
-    
+
 }

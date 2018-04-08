@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -51,6 +52,12 @@ public class Task implements Serializable {
     @JsonIgnore
     private Set<Action> actions = new HashSet<>();
 
+    @ManyToMany(mappedBy = "tasks")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<DailyTaskList> dailyTaskLists = new HashSet<>();
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -149,6 +156,32 @@ public class Task implements Serializable {
         this.actions = actions;
     }
 
+    public Set<DailyTaskList> getDailyTaskLists() {
+        return dailyTaskLists;
+    }
+
+    public Task dailyTaskLists(Set<DailyTaskList> dailyTaskLists) {
+        this.dailyTaskLists = dailyTaskLists;
+        return this;
+    }
+
+    public Task addDailyTaskList(DailyTaskList dailyTaskList) {
+        this.dailyTaskLists.add(dailyTaskList);
+        dailyTaskList.getTasks().add(this);
+        return this;
+    }
+
+    public Task removeDailyTaskList(DailyTaskList dailyTaskList) {
+        this.dailyTaskLists.remove(dailyTaskList);
+        dailyTaskList.getTasks().remove(this);
+        return this;
+    }
+
+    public void setDailyTaskLists(Set<DailyTaskList> dailyTaskLists) {
+        this.dailyTaskLists = dailyTaskLists;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -176,7 +209,7 @@ public class Task implements Serializable {
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             ", statusDate='" + getStatusDate() + "'" +
-            ", estimate='" + getEstimate() + "'" +
+            ", estimate=" + getEstimate() +
             "}";
     }
 }

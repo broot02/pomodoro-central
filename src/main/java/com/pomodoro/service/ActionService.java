@@ -44,10 +44,10 @@ public class ActionService {
     }
 
     /**
-     *  Get all the actions.
+     * Get all the actions.
      *
-     *  @param pageable the pagination information
-     *  @return the list of entities
+     * @param pageable the pagination information
+     * @return the list of entities
      */
     @Transactional(readOnly = true)
     public Page<ActionDTO> findAll(Pageable pageable) {
@@ -57,10 +57,10 @@ public class ActionService {
     }
 
     /**
-     *  Get one action by id.
+     * Get one action by id.
      *
-     *  @param id the id of the entity
-     *  @return the entity
+     * @param id the id of the entity
+     * @return the entity
      */
     @Transactional(readOnly = true)
     public ActionDTO findOne(Long id) {
@@ -70,9 +70,9 @@ public class ActionService {
     }
 
     /**
-     *  Delete the  action by id.
+     * Delete the action by id.
      *
-     *  @param id the id of the entity
+     * @param id the id of the entity
      */
     public void delete(Long id) {
         log.debug("Request to delete Action : {}", id);

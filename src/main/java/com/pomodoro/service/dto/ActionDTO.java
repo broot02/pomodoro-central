@@ -80,7 +80,7 @@ public class ActionDTO implements Serializable {
         return "ActionDTO{" +
             "id=" + getId() +
             ", status='" + getStatus() + "'" +
-            ", duration='" + getDuration() + "'" +
+            ", duration=" + getDuration() +
             "}";
     }
 }
