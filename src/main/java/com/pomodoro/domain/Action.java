@@ -15,7 +15,6 @@ import com.pomodoro.domain.enumeration.Status;
  */
 @Entity
 @Table(name = "action")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Action implements Serializable {
 
     private static final long serialVersionUID = 1L;

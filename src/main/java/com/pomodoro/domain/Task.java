@@ -19,7 +19,6 @@ import com.pomodoro.domain.enumeration.Status;
  */
 @Entity
 @Table(name = "task")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Task implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,7 +49,6 @@ public class Task implements Serializable {
 
     @OneToMany(mappedBy = "task")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Action> actions = new HashSet<>();
 
     public Long getId() {
