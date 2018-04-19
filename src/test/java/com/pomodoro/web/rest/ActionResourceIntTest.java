@@ -24,6 +24,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static com.pomodoro.web.rest.TestUtil.createFormattingConversionService;
@@ -47,6 +49,12 @@ public class ActionResourceIntTest {
 
     private static final Integer DEFAULT_DURATION = 1;
     private static final Integer UPDATED_DURATION = 2;
+
+    private static final Instant DEFAULT_START_TIME = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_START_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Instant DEFAULT_END_TIME = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_END_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     @Autowired
     private ActionRepository actionRepository;
@@ -93,7 +101,9 @@ public class ActionResourceIntTest {
     public static Action createEntity(EntityManager em) {
         Action action = new Action()
             .status(DEFAULT_STATUS)
-            .duration(DEFAULT_DURATION);
+            .duration(DEFAULT_DURATION)
+            .startTime(DEFAULT_START_TIME)
+            .endTime(DEFAULT_END_TIME);
         return action;
     }
 
@@ -120,6 +130,8 @@ public class ActionResourceIntTest {
         Action testAction = actionList.get(actionList.size() - 1);
         assertThat(testAction.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testAction.getDuration()).isEqualTo(DEFAULT_DURATION);
+        assertThat(testAction.getStartTime()).isEqualTo(DEFAULT_START_TIME);
+        assertThat(testAction.getEndTime()).isEqualTo(DEFAULT_END_TIME);
     }
 
     @Test
@@ -173,7 +185,9 @@ public class ActionResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(action.getId().intValue())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)));
+            .andExpect(jsonPath("$.[*].duration").value(hasItem(DEFAULT_DURATION)))
+            .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
     }
 
     @Test
@@ -188,7 +202,9 @@ public class ActionResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(action.getId().intValue()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION));
+            .andExpect(jsonPath("$.duration").value(DEFAULT_DURATION))
+            .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
+            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()));
     }
 
     @Test
@@ -212,7 +228,9 @@ public class ActionResourceIntTest {
         em.detach(updatedAction);
         updatedAction
             .status(UPDATED_STATUS)
-            .duration(UPDATED_DURATION);
+            .duration(UPDATED_DURATION)
+            .startTime(UPDATED_START_TIME)
+            .endTime(UPDATED_END_TIME);
         ActionDTO actionDTO = actionMapper.toDto(updatedAction);
 
         restActionMockMvc.perform(put("/api/actions")
@@ -226,6 +244,8 @@ public class ActionResourceIntTest {
         Action testAction = actionList.get(actionList.size() - 1);
         assertThat(testAction.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testAction.getDuration()).isEqualTo(UPDATED_DURATION);
+        assertThat(testAction.getStartTime()).isEqualTo(UPDATED_START_TIME);
+        assertThat(testAction.getEndTime()).isEqualTo(UPDATED_END_TIME);
     }
 
     @Test

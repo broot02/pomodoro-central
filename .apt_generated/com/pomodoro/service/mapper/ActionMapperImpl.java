@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2018-04-08T16:18:47-0400",
+    date = "2018-04-19T14:56:45-0400",
     comments = "version: 1.2.0.Final, compiler: Eclipse JDT (IDE) 3.12.3.v20170228-1205, environment: Java 1.8.0_92 (Oracle Corporation)"
 )
 @Component
@@ -21,28 +21,28 @@ public class ActionMapperImpl implements ActionMapper {
     private TaskMapper taskMapper;
 
     @Override
-    public List<ActionDTO> toDto(List<Action> arg0) {
-        if ( arg0 == null ) {
+    public List<Action> toEntity(List<ActionDTO> dtoList) {
+        if ( dtoList == null ) {
             return null;
         }
 
-        List<ActionDTO> list = new ArrayList<ActionDTO>( arg0.size() );
-        for ( Action action : arg0 ) {
-            list.add( toDto( action ) );
+        List<Action> list = new ArrayList<Action>( dtoList.size() );
+        for ( ActionDTO actionDTO : dtoList ) {
+            list.add( toEntity( actionDTO ) );
         }
 
         return list;
     }
 
     @Override
-    public List<Action> toEntity(List<ActionDTO> arg0) {
-        if ( arg0 == null ) {
+    public List<ActionDTO> toDto(List<Action> entityList) {
+        if ( entityList == null ) {
             return null;
         }
 
-        List<Action> list = new ArrayList<Action>( arg0.size() );
-        for ( ActionDTO actionDTO : arg0 ) {
-            list.add( toEntity( actionDTO ) );
+        List<ActionDTO> list = new ArrayList<ActionDTO>( entityList.size() );
+        for ( Action action : entityList ) {
+            list.add( toDto( action ) );
         }
 
         return list;
@@ -60,9 +60,11 @@ public class ActionMapperImpl implements ActionMapper {
         if ( id != null ) {
             actionDTO.setTaskId( id );
         }
-        actionDTO.setDuration( action.getDuration() );
         actionDTO.setId( action.getId() );
         actionDTO.setStatus( action.getStatus() );
+        actionDTO.setDuration( action.getDuration() );
+        actionDTO.setStartTime( action.getStartTime() );
+        actionDTO.setEndTime( action.getEndTime() );
 
         return actionDTO;
     }
@@ -76,9 +78,11 @@ public class ActionMapperImpl implements ActionMapper {
         Action action = new Action();
 
         action.setTask( taskMapper.fromId( actionDTO.getTaskId() ) );
-        action.setDuration( actionDTO.getDuration() );
         action.setId( actionDTO.getId() );
         action.setStatus( actionDTO.getStatus() );
+        action.setDuration( actionDTO.getDuration() );
+        action.setStartTime( actionDTO.getStartTime() );
+        action.setEndTime( actionDTO.getEndTime() );
 
         return action;
     }

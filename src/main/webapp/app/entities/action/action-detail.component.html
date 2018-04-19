@@ -12,6 +12,14 @@
         <dd>
             <span>{{action.duration}}</span>
         </dd>
+        <dt><span>Start Time</span></dt>
+        <dd>
+            <span>{{action.startTime | date:'medium'}}</span>
+        </dd>
+        <dt><span>End Time</span></dt>
+        <dd>
+            <span>{{action.endTime | date:'medium'}}</span>
+        </dd>
         <dt><span>Task</span></dt>
         <dd>
             <div *ngIf="action.taskId">

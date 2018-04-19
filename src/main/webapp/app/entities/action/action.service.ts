@@ -3,6 +3,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { SERVER_API_URL } from '../../app.constants';
 
+import { JhiDateUtils } from 'ng-jhipster';
+
 import { Action } from './action.model';
 import { createRequestOption } from '../../shared';
 
@@ -13,7 +15,7 @@ export class ActionService {
 
     private resourceUrl =  SERVER_API_URL + 'api/actions';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private dateUtils: JhiDateUtils) { }
 
     create(action: Action): Observable<EntityResponseType> {
         const copy = this.convert(action);
@@ -61,6 +63,10 @@ export class ActionService {
      */
     private convertItemFromServer(action: Action): Action {
         const copy: Action = Object.assign({}, action);
+        copy.startTime = this.dateUtils
+            .convertDateTimeFromServer(action.startTime);
+        copy.endTime = this.dateUtils
+            .convertDateTimeFromServer(action.endTime);
         return copy;
     }
 
@@ -69,6 +75,10 @@ export class ActionService {
      */
     private convert(action: Action): Action {
         const copy: Action = Object.assign({}, action);
+
+        copy.startTime = this.dateUtils.toDate(action.startTime);
+
+        copy.endTime = this.dateUtils.toDate(action.endTime);
         return copy;
     }
 }
