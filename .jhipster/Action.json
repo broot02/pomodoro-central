@@ -20,11 +20,20 @@
         {
             "fieldName": "duration",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "startTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "Instant"
         }
     ],
     "changelogDate": "20180401225605",
     "dto": "mapstruct",
     "service": "serviceClass",
     "entityTableName": "action",
+    "jpaMetamodelFiltering": false,
     "pagination": "infinite-scroll"
 }

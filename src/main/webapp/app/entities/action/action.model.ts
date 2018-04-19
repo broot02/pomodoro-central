@@ -12,6 +12,8 @@ export class Action implements BaseEntity {
         public id?: number,
         public status?: Status,
         public duration?: number,
+        public startTime?: any,
+        public endTime?: any,
         public taskId?: number,
     ) {
     }

@@ -2,6 +2,7 @@ import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 import { Action } from './action.model';
 import { ActionService } from './action.service';
 
@@ -10,6 +11,7 @@ export class ActionPopupService {
     private ngbModalRef: NgbModalRef;
 
     constructor(
+        private datePipe: DatePipe,
         private modalService: NgbModal,
         private router: Router,
         private actionService: ActionService
@@ -29,6 +31,10 @@ export class ActionPopupService {
                 this.actionService.find(id)
                     .subscribe((actionResponse: HttpResponse<Action>) => {
                         const action: Action = actionResponse.body;
+                        action.startTime = this.datePipe
+                            .transform(action.startTime, 'yyyy-MM-ddTHH:mm:ss');
+                        action.endTime = this.datePipe
+                            .transform(action.endTime, 'yyyy-MM-ddTHH:mm:ss');
                         this.ngbModalRef = this.actionModalRef(component, action);
                         resolve(this.ngbModalRef);
                     });

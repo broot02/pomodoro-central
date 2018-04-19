@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 import com.pomodoro.domain.enumeration.Status;
@@ -16,6 +17,7 @@ import com.pomodoro.domain.enumeration.Status;
  */
 @Entity
 @Table(name = "action")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Action implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,6 +34,12 @@ public class Action implements Serializable {
 
     @Column(name = "duration")
     private Integer duration;
+
+    @Column(name = "start_time")
+    private Instant startTime;
+
+    @Column(name = "end_time")
+    private Instant endTime;
 
     @ManyToOne
     private Task task;
@@ -69,6 +77,32 @@ public class Action implements Serializable {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public Instant getStartTime() {
+        return startTime;
+    }
+
+    public Action startTime(Instant startTime) {
+        this.startTime = startTime;
+        return this;
+    }
+
+    public void setStartTime(Instant startTime) {
+        this.startTime = startTime;
+    }
+
+    public Instant getEndTime() {
+        return endTime;
+    }
+
+    public Action endTime(Instant endTime) {
+        this.endTime = endTime;
+        return this;
+    }
+
+    public void setEndTime(Instant endTime) {
+        this.endTime = endTime;
     }
 
     public Task getTask() {
@@ -111,6 +145,8 @@ public class Action implements Serializable {
             "id=" + getId() +
             ", status='" + getStatus() + "'" +
             ", duration=" + getDuration() +
+            ", startTime='" + getStartTime() + "'" +
+            ", endTime='" + getEndTime() + "'" +
             "}";
     }
 }

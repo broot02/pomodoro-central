@@ -1,6 +1,7 @@
 package com.pomodoro.service.dto;
 
 
+import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -19,6 +20,10 @@ public class ActionDTO implements Serializable {
     private Status status;
 
     private Integer duration;
+
+    private Instant startTime;
+
+    private Instant endTime;
 
     private Long taskId;
 
@@ -44,6 +49,22 @@ public class ActionDTO implements Serializable {
 
     public void setDuration(Integer duration) {
         this.duration = duration;
+    }
+
+    public Instant getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Instant startTime) {
+        this.startTime = startTime;
+    }
+
+    public Instant getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Instant endTime) {
+        this.endTime = endTime;
     }
 
     public Long getTaskId() {
@@ -81,6 +102,8 @@ public class ActionDTO implements Serializable {
             "id=" + getId() +
             ", status='" + getStatus() + "'" +
             ", duration=" + getDuration() +
+            ", startTime='" + getStartTime() + "'" +
+            ", endTime='" + getEndTime() + "'" +
             "}";
     }
 }
