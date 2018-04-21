@@ -23,11 +23,11 @@
         },
         {
             "fieldName": "startTime",
-            "fieldType": "Instant"
+            "fieldType": "ZonedDateTime"
         },
         {
             "fieldName": "endTime",
-            "fieldType": "Instant"
+            "fieldType": "ZonedDateTime"
         }
     ],
     "changelogDate": "20180401225605",

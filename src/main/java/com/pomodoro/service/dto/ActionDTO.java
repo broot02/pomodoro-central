@@ -1,7 +1,7 @@
 package com.pomodoro.service.dto;
 
 
-import java.time.Instant;
+import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -21,9 +21,9 @@ public class ActionDTO implements Serializable {
 
     private Integer duration;
 
-    private Instant startTime;
+    private ZonedDateTime startTime;
 
-    private Instant endTime;
+    private ZonedDateTime endTime;
 
     private Long taskId;
 
@@ -51,19 +51,19 @@ public class ActionDTO implements Serializable {
         this.duration = duration;
     }
 
-    public Instant getStartTime() {
+    public ZonedDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Instant startTime) {
+    public void setStartTime(ZonedDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public Instant getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Instant endTime) {
+    public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
     }
 
