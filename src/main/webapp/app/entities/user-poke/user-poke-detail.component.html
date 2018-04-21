@@ -1,0 +1,36 @@
+
+<div *ngIf="userPoke">
+    <h2><span>User Poke</span> {{userPoke.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Title</span></dt>
+        <dd>
+            <span>{{userPoke.title}}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+            <span>{{userPoke.description}}</span>
+        </dd>
+        <dt><span>Associated User</span></dt>
+        <dd>
+            <div *ngIf="userPoke.associatedUserId">
+                <a [routerLink]="['/associated-user', userPoke.associatedUserId]">{{userPoke.associatedUserId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'user-poke/'+ userPoke.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

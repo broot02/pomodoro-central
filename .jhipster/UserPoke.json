@@ -1,0 +1,38 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "associatedUser",
+            "otherEntityName": "associatedUser",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "userPoke"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "50"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "2000"
+        }
+    ],
+    "changelogDate": "20180421163748",
+    "dto": "mapstruct",
+    "service": "serviceClass",
+    "entityTableName": "user_poke",
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
+}

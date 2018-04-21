@@ -51,6 +51,7 @@ public class CacheConfiguration {
             cm.createCache(com.pomodoro.domain.DailyTaskList.class.getName() + ".tasks", jcacheConfiguration);
             cm.createCache(com.pomodoro.domain.DailyTaskList.class.getName() + ".taskLists", jcacheConfiguration);
             cm.createCache(com.pomodoro.domain.Task.class.getName() + ".dailyTaskLists", jcacheConfiguration);
+            cm.createCache(com.pomodoro.domain.UserPoke.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

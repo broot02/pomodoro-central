@@ -4,6 +4,7 @@ import { PomodoroTaskModule } from './task/task.module';
 import { PomodoroActionModule } from './action/action.module';
 import { PomodoroAssociatedUserModule } from './associated-user/associated-user.module';
 import { PomodoroDailyTaskListModule } from './daily-task-list/daily-task-list.module';
+import { PomodoroUserPokeModule } from './user-poke/user-poke.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -12,6 +13,7 @@ import { PomodoroDailyTaskListModule } from './daily-task-list/daily-task-list.m
         PomodoroActionModule,
         PomodoroAssociatedUserModule,
         PomodoroDailyTaskListModule,
+        PomodoroUserPokeModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],
