@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 import com.pomodoro.domain.enumeration.Status;
@@ -36,10 +36,10 @@ public class Action implements Serializable {
     private Integer duration;
 
     @Column(name = "start_time")
-    private Instant startTime;
+    private ZonedDateTime startTime;
 
     @Column(name = "end_time")
-    private Instant endTime;
+    private ZonedDateTime endTime;
 
     @ManyToOne
     private Task task;
@@ -79,29 +79,29 @@ public class Action implements Serializable {
         this.duration = duration;
     }
 
-    public Instant getStartTime() {
+    public ZonedDateTime getStartTime() {
         return startTime;
     }
 
-    public Action startTime(Instant startTime) {
+    public Action startTime(ZonedDateTime startTime) {
         this.startTime = startTime;
         return this;
     }
 
-    public void setStartTime(Instant startTime) {
+    public void setStartTime(ZonedDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public Instant getEndTime() {
+    public ZonedDateTime getEndTime() {
         return endTime;
     }
 
-    public Action endTime(Instant endTime) {
+    public Action endTime(ZonedDateTime endTime) {
         this.endTime = endTime;
         return this;
     }
 
-    public void setEndTime(Instant endTime) {
+    public void setEndTime(ZonedDateTime endTime) {
         this.endTime = endTime;
     }
 
