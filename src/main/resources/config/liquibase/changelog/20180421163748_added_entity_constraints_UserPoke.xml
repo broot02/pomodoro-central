@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity UserPoke.
+    -->
+    <changeSet id="20180421163748-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="associated_user_id"
+                                 baseTableName="user_poke"
+                                 constraintName="fk_user_poke_associated_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="associated_user"/>
+
+    </changeSet>
+</databaseChangeLog>
